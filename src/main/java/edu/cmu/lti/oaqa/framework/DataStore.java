@@ -6,5 +6,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 public interface DataStore {
   JdbcTemplate jdbcTemplate();
   NamedParameterJdbcTemplate namedJdbcTemplate();
+  @Deprecated
   boolean isEmbedded();
 }

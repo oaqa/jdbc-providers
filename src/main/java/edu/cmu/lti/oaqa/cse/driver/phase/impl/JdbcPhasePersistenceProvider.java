@@ -29,7 +29,8 @@ public abstract class JdbcPhasePersistenceProvider extends AbstractPhasePersiste
     DataStoreImpl.getInstance().jdbcTemplate().update(new PreparedStatementCreator() {
       @Override
       public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-        PreparedStatement ps = con.prepareStatement(getInsertQuery());
+        String insert = (String) getParameterValue("insert-query");
+        PreparedStatement ps = con.prepareStatement(insert);
         ps.setString(1, optionId);
         ps.setString(2, "");
         ps.setInt(3, sequenceId);
@@ -50,11 +51,12 @@ public abstract class JdbcPhasePersistenceProvider extends AbstractPhasePersiste
   @Override
   public void storeCas(final byte[] bytes, final ExecutionStatus status, final long endTime,
           final String key) throws IOException {
+    String update = (String) getParameterValue("update-query");
     LobHandler lobHandler = new DefaultLobHandler();
     DataStoreImpl
             .getInstance()
             .jdbcTemplate()
-            .execute(getUpdateQuery(),
+            .execute(update,
                     new AbstractLobCreatingPreparedStatementCallback(lobHandler) {
                       protected void setValues(PreparedStatement ps, LobCreator lobCreator)
                               throws SQLException {
@@ -69,11 +71,12 @@ public abstract class JdbcPhasePersistenceProvider extends AbstractPhasePersiste
   @Override
   public void storeException(final byte[] bytes, final ExecutionStatus status,
           final long endTime, final String key) throws IOException, SAXException {
+    String update = (String) getParameterValue("update-query");
     LobHandler lobHandler = new DefaultLobHandler();
     DataStoreImpl
             .getInstance()
             .jdbcTemplate()
-            .execute(getUpdateQuery(),
+            .execute(update,
                     new AbstractLobCreatingPreparedStatementCallback(lobHandler) {
                       protected void setValues(PreparedStatement ps, LobCreator lobCreator)
                               throws SQLException {
@@ -89,10 +92,11 @@ public abstract class JdbcPhasePersistenceProvider extends AbstractPhasePersiste
   @Override
   public CasDeserializer deserialize(JCas jcas, final String hash) throws SQLException {
     CasDeserializerRowMapper mapper = new CasDeserializerRowMapper(jcas);
-    String query = getSelectQuery();
-    DataStoreImpl.getInstance().jdbcTemplate().query(query, new PreparedStatementSetter() {
+    String select = (String) getParameterValue("select-query");
+    DataStoreImpl.getInstance().jdbcTemplate().query(select, new PreparedStatementSetter() {
       public void setValues(PreparedStatement ps) throws SQLException {
         ps.setString(1, hash);
+        ps.setString(2, ExecutionStatus.FAILURE.toString());
       }
     }, mapper);
     return mapper;
@@ -101,7 +105,7 @@ public abstract class JdbcPhasePersistenceProvider extends AbstractPhasePersiste
   @Override
   public void insertExperimentMeta(final String experimentId, final int phaseNo,
           final int stageId, final int size) {
-    String insert = getInsertMetaQuery();
+    String insert = (String) getParameterValue("insert-meta-query");
     JdbcTemplate jdbcTemplate = DataStoreImpl.getInstance().jdbcTemplate();
     jdbcTemplate.update(insert, new PreparedStatementSetter() {
       public void setValues(PreparedStatement ps) throws SQLException {
@@ -112,12 +116,4 @@ public abstract class JdbcPhasePersistenceProvider extends AbstractPhasePersiste
       }
     });
   }
-
-  protected abstract String getInsertQuery();
-
-  protected abstract String getInsertMetaQuery();
-
-  protected abstract String getUpdateQuery();
-
-  protected abstract String getSelectQuery();
 }

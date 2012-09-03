@@ -15,9 +15,7 @@ public final class DataStoreImpl implements DataStore {
   private final NamedParameterJdbcTemplate namedJdbcTemplate;
 
   private static DataStore ds;
-
-  private final boolean embedded;
-
+  
   public static DataStore getInstance() {
     if (ds == null) {
       throw new IllegalStateException("DataStore has not been initialized");
@@ -37,10 +35,11 @@ public final class DataStoreImpl implements DataStore {
     return getInstance(url, username, password, false);
   }
 
+  @Deprecated
   public static DataStore getInstance(String url, String username, String password, boolean embedded)
           throws SQLException {
     if (ds == null) {
-      ds = new DataStoreImpl(url, username, password, embedded);
+      ds = new DataStoreImpl(url, username, password);
     }
     return ds;
   }
@@ -49,9 +48,8 @@ public final class DataStoreImpl implements DataStore {
     ds = _ds;
   }
 
-  private DataStoreImpl(String url, String username, String password, boolean embedded)
+  private DataStoreImpl(String url, String username, String password)
           throws SQLException {
-    this.embedded = embedded;
     ComboPooledDataSource cpds = new ComboPooledDataSource();
     cpds.setJdbcUrl(url);
     if (username != null) {
@@ -61,7 +59,7 @@ public final class DataStoreImpl implements DataStore {
       cpds.setPassword(password);
     }
     cpds.setPreferredTestQuery("SELECT 1");
-    cpds.setTestConnectionOnCheckout(!embedded);
+//    cpds.setTestConnectionOnCheckout(!embedded);
     cpds.setInitialPoolSize(1);
     cpds.setMinPoolSize(1);
     cpds.setMaxPoolSize(2);
@@ -79,9 +77,10 @@ public final class DataStoreImpl implements DataStore {
     return namedJdbcTemplate;
   }
 
+  @Deprecated
   @Override
   public boolean isEmbedded() {
-    return embedded;
+    return false;
   }
 
 }

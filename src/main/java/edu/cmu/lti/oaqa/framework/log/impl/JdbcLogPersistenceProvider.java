@@ -35,7 +35,7 @@ public abstract class JdbcLogPersistenceProvider extends AbstractLogPersistenceP
   @Override
   public void log(final String uuid, final Trace trace, final LogEntry type, final String message) {
     System.out.printf("[logger] %s,%s,%s,%s,%s\n", new Date(), uuid, trace, type, message);
-    String insert = getInsertLogEntryQuery();
+    String insert = (String) getParameterValue("insert-log-entry-query");
     DataStoreImpl.getInstance().jdbcTemplate().update(insert, new PreparedStatementSetter() {
       @Override
       public void setValues(PreparedStatement ps) throws SQLException {
@@ -58,8 +58,16 @@ public abstract class JdbcLogPersistenceProvider extends AbstractLogPersistenceP
     }
     return DataStoreImpl.getInstance().jdbcTemplate().queryForList(query, String.class, params.toArray());
   }
-
-  protected abstract String getSelectLogEntriesQuery(Trace trace, LogEntry type);
-
-  protected abstract String getInsertLogEntryQuery();
+  
+  private String getSelectLogEntriesQuery(Trace trace, LogEntry type) {
+    StringBuilder query = new StringBuilder();
+    query.append((String) getParameterValue("select-log-entries-query"));
+    if (trace != null) {
+      query.append((String) getParameterValue("select-log-entries-trace-clause"));
+    }
+    if (type != null) {
+      query.append((String) getParameterValue("select-log-entries-type-clause"));
+    }
+    return query.toString();
+  }
 }

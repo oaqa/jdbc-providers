@@ -1,0 +1,18 @@
+class: edu.cmu.lti.oaqa.ecd.phase.BasePhase
+persistence-provider: |
+  class: edu.cmu.lti.oaqa.cse.driver.phase.impl.JdbcPhasePersistenceProvider
+  insert-query: |
+    INSERT IGNORE INTO cas
+      (optionId,question,sequenceId,dataset,phase,experiment,
+      startTime,predecesorId,hostname,trace,traceHash)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?)
+  insert-meta-query: |
+    INSERT IGNORE INTO experiment_meta (experiment,phase,stage,size) 
+    VALUES (?,?,?,?)
+  update-query: |
+    UPDATE cas SET xcas = ?, status = ?, endTime = ? WHERE traceHash = ?
+  select-query: |
+    SELECT status, xcas FROM cas WHERE traceHash = ? AND
+     status IS NOT NULL AND status <> ?
+  
+  

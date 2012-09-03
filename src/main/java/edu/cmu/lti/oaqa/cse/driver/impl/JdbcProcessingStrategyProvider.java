@@ -18,10 +18,8 @@ public abstract class JdbcProcessingStrategyProvider extends AbstractProcessingS
   }
   
   private List<String> getMatchingTraces(String experiment) {
-    String query = getSelectFunneledTraces();
+    String query = (String) getParameterValue("select-funneled-traces");
     JdbcTemplate template = DataStoreImpl.getInstance().jdbcTemplate();
     return template.queryForList(query, String.class, experiment);
   }
-  
-  protected abstract String getSelectFunneledTraces();
 }

@@ -1,0 +1,2 @@
+class: edu.cmu.lti.oaqa.cse.driver.impl.JdbcProcessingStrategyProvider
+select-funneled-traces: SELECT traceId FROM funneled_traces WHERE experimentId = ?
