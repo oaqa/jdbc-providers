@@ -20,7 +20,7 @@ import edu.cmu.lti.oaqa.ecd.phase.CasDeserializer;
 import edu.cmu.lti.oaqa.ecd.phase.ExecutionStatus;
 import edu.cmu.lti.oaqa.framework.DataStoreImpl;
 
-public abstract class JdbcPhasePersistenceProvider extends AbstractPhasePersistenceProvider {
+public class JdbcPhasePersistenceProvider extends AbstractPhasePersistenceProvider {
 
   @Override
   public void insertExecutionTrace(final String optionId, final int sequenceId,

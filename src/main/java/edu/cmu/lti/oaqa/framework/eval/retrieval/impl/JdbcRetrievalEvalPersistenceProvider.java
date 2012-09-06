@@ -18,7 +18,7 @@ import edu.cmu.lti.oaqa.framework.eval.retrieval.FMeasureEvaluationData;
 import edu.cmu.lti.oaqa.framework.eval.retrieval.RetrievalCounts;
 import edu.cmu.lti.oaqa.framework.persistence.AbstractRetrievalEvalPersistenceProvider;
 
-public abstract class JdbcRetrievalEvalPersistenceProvider extends AbstractRetrievalEvalPersistenceProvider {
+public class JdbcRetrievalEvalPersistenceProvider extends AbstractRetrievalEvalPersistenceProvider {
   
   @Override
   public void insertPartialCounts(final Key key, final int sequenceId, final RetrievalCounts counts) throws SQLException {

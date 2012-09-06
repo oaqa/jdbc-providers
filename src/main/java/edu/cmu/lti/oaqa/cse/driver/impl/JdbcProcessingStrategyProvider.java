@@ -9,7 +9,7 @@ import edu.cmu.lti.oaqa.ecd.flow.FunneledFlow;
 import edu.cmu.lti.oaqa.ecd.funnel.SetBasedFunnelStrategy;
 import edu.cmu.lti.oaqa.framework.DataStoreImpl;
 
-public abstract class JdbcProcessingStrategyProvider extends AbstractProcessingStrategy {
+public class JdbcProcessingStrategyProvider extends AbstractProcessingStrategy {
   
   @Override
   public FunneledFlow newFunnelStrategy(String experimentUuid) {

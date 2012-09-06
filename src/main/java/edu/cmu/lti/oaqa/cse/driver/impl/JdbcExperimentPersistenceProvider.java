@@ -14,7 +14,7 @@ import com.google.common.base.Preconditions;
 import edu.cmu.lti.oaqa.ecd.persistence.AbstractExperimentPersistenceProvider;
 import edu.cmu.lti.oaqa.framework.DataStoreImpl;
 
-public abstract class JdbcExperimentPersistenceProvider extends AbstractExperimentPersistenceProvider {
+public class JdbcExperimentPersistenceProvider extends AbstractExperimentPersistenceProvider {
 
   private static final String NON_NULL_ERROR_MSG = "Parameter <%s> must not be null";
   

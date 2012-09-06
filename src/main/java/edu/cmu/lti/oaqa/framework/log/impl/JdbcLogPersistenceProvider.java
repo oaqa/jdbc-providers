@@ -30,7 +30,7 @@ import edu.cmu.lti.oaqa.ecd.persistence.AbstractLogPersistenceProvider;
 import edu.cmu.lti.oaqa.ecd.phase.Trace;
 import edu.cmu.lti.oaqa.framework.DataStoreImpl;
 
-public abstract class JdbcLogPersistenceProvider extends AbstractLogPersistenceProvider {
+public class JdbcLogPersistenceProvider extends AbstractLogPersistenceProvider {
 
   @Override
   public void log(final String uuid, final Trace trace, final LogEntry type, final String message) {
