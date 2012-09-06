@@ -22,12 +22,11 @@ public class JdbcExperimentPersistenceProvider extends AbstractExperimentPersist
   public boolean initialize(ResourceSpecifier aSpecifier, Map<String, Object> tuples)
           throws ResourceInitializationException {
     try {
-      String url = (String) tuples.get("url");
+      super.initialize(aSpecifier, tuples);
+      String url = (String) tuples.get("url");      
       Preconditions.checkNotNull(url, NON_NULL_ERROR_MSG, "url");
       String username = (String) tuples.get("username");
-      Preconditions.checkNotNull(username, NON_NULL_ERROR_MSG, "username");
       String password = (String) tuples.get("password");
-      Preconditions.checkNotNull(password, NON_NULL_ERROR_MSG, "password");
       DataStoreImpl.getInstance(url, username, password);
       return true;
     } catch (SQLException e) {
