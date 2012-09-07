@@ -23,7 +23,7 @@ public class JdbcRetrievalEvalPersistenceProvider extends AbstractRetrievalEvalP
   @Override
   public void insertPartialCounts(final Key key, final int sequenceId, final RetrievalCounts counts) throws SQLException {
     final String eName = getClass().getSimpleName();
-    String insert = (String) getParameterValue("select-passage-aggregates-query");
+    String insert = (String) getParameterValue("insert-passage-aggregates-query");
     final Trace trace = key.getTrace();
     DataStoreImpl.getInstance().jdbcTemplate().update(insert, new PreparedStatementSetter() {
       public void setValues(PreparedStatement ps) throws SQLException {
