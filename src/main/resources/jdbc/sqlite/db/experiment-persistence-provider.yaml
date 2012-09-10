@@ -1,6 +1,7 @@
 inherit: jdbc.db.experiment-persistence-provider
+
 insert-experiment-query: |
-  MERGE INTO EXPERIMENT (ID,NAME,AUTHOR,CONFIGU,resource)
+  INSERT OR IGNORE INTO EXPERIMENT (id,name,author,configuration,resource)
   VALUES (?,?,?,?,?)
 
 experiments: |
