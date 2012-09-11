@@ -1,5 +1,5 @@
 inherit: jdbc.db.experiment-persistence-provider
-
+driver: org.sqlite.JDBC
 insert-experiment-query: |
   INSERT OR IGNORE INTO EXPERIMENT (id,name,author,configuration,resource)
   VALUES (?,?,?,?,?)

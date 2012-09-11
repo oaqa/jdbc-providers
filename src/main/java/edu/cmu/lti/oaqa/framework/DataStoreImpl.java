@@ -15,7 +15,7 @@ public final class DataStoreImpl implements DataStore {
   private final NamedParameterJdbcTemplate namedJdbcTemplate;
 
   private static DataStore ds;
-  
+
   public static DataStore getInstance() {
     if (ds == null) {
       throw new IllegalStateException("DataStore has not been initialized");
@@ -35,21 +35,36 @@ public final class DataStoreImpl implements DataStore {
     return getInstance(url, username, password, false);
   }
 
+  public static DataStore getInstance(String url, String username, String password, String driver)
+          throws SQLException {
+    if (ds == null) {
+      ds = new DataStoreImpl(url, username, password, driver);
+    }
+    return ds;
+  }
+
   @Deprecated
   public static DataStore getInstance(String url, String username, String password, boolean embedded)
           throws SQLException {
     if (ds == null) {
-      ds = new DataStoreImpl(url, username, password);
+      ds = new DataStoreImpl(url, username, password, null);
     }
     return ds;
   }
-  
+
   public static void setMock(DataStore _ds) {
     ds = _ds;
   }
 
-  private DataStoreImpl(String url, String username, String password)
-          throws SQLException {
+  private DataStoreImpl(String url, String username, String password, String driver) throws SQLException {
+    // System.setProperty("sqlite.purejava", "true");
+    if (driver != null) {
+      try {
+        Class.forName("org.sqlite.JDBC");
+      } catch (ClassNotFoundException e) {
+        throw new SQLException(e);
+      }
+    }
     ComboPooledDataSource cpds = new ComboPooledDataSource();
     cpds.setJdbcUrl(url);
     if (username != null) {
@@ -59,14 +74,14 @@ public final class DataStoreImpl implements DataStore {
       cpds.setPassword(password);
     }
     cpds.setPreferredTestQuery("SELECT 1");
-//    cpds.setTestConnectionOnCheckout(!embedded);
+    // cpds.setTestConnectionOnCheckout(!embedded);
     cpds.setInitialPoolSize(1);
     cpds.setMinPoolSize(1);
     cpds.setMaxPoolSize(2);
     this.jdbcTemplate = new JdbcTemplate(cpds);
     this.namedJdbcTemplate = new NamedParameterJdbcTemplate(cpds);
   }
-  
+
   @Override
   public JdbcTemplate jdbcTemplate() {
     return jdbcTemplate;

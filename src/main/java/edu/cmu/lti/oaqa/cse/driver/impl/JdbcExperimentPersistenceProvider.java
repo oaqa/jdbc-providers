@@ -27,7 +27,8 @@ public class JdbcExperimentPersistenceProvider extends AbstractExperimentPersist
       Preconditions.checkNotNull(url, NON_NULL_ERROR_MSG, "url");
       String username = (String) tuples.get("username");
       String password = (String) tuples.get("password");
-      DataStoreImpl.getInstance(url, username, password);
+      String driver = (String) tuples.get("driver");
+      DataStoreImpl.getInstance(url, username, password, driver);
       return true;
     } catch (SQLException e) {
       throw new ResourceInitializationException(e);
