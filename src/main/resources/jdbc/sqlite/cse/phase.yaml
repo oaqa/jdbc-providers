@@ -1,0 +1,5 @@
+inherit: jdbc.cse.phase
+persistence-provider: |
+  inherit: jdbc.sqlite.cse.phase-persistence-provider
+  
+  
