@@ -77,7 +77,7 @@ public final class DataStoreImpl implements DataStore {
     // cpds.setTestConnectionOnCheckout(!embedded);
     cpds.setInitialPoolSize(1);
     cpds.setMinPoolSize(1);
-    cpds.setMaxPoolSize(8); //  Allow for timedout objects
+    cpds.setMaxPoolSize(4); //  Allow larger pool for time out objects
     this.jdbcTemplate = new JdbcTemplate(cpds);
     this.namedJdbcTemplate = new NamedParameterJdbcTemplate(cpds);
   }
