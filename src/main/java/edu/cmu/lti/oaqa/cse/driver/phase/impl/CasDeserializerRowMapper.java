@@ -42,4 +42,4 @@ public final class CasDeserializerRowMapper implements CasDeserializer, RowCallb
   public boolean processedCas() {
     return processedCas;
   }
-}
+} 
