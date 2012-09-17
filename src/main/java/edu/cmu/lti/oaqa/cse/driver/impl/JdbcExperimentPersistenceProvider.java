@@ -3,11 +3,13 @@ package edu.cmu.lti.oaqa.cse.driver.impl;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.yaml.snakeyaml.Yaml;
 
 import com.google.common.base.Preconditions;
 
@@ -59,6 +61,21 @@ public class JdbcExperimentPersistenceProvider extends AbstractExperimentPersist
       public void setValues(PreparedStatement ps) throws SQLException {
         ps.setInt(1, size);
         ps.setString(2, experimentId);
+      }
+    }); 
+  }
+
+  @Override
+  public void updateExperimentMeta(final String experimentId, final int size, Set<Integer> topics) {
+    Yaml yaml = new Yaml();
+    final String topicsSerial = yaml.dump(topics);
+    String insert = (String) getParameterValue("update-experiment-topics-query");
+    JdbcTemplate jdbcTemplate = DataStoreImpl.getInstance().jdbcTemplate();
+    jdbcTemplate.update(insert, new PreparedStatementSetter() {
+      public void setValues(PreparedStatement ps) throws SQLException {
+        ps.setInt(1, size);
+        ps.setString(2, topicsSerial);
+        ps.setString(3, experimentId);
       }
     }); 
   }

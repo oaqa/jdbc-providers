@@ -3,3 +3,4 @@ insert-experiment-query: |
   INSERT IGNORE INTO experiment (id,name,author,configuration,resource)
   VALUES (?,?,?,?,?)
 update-experiment-meta-query: UPDATE experiment SET size = ? WHERE id = ?
+update-experiment-topics-query: UPDATE experiment SET size = ?, sequenceIds = ? WHERE id = ?
