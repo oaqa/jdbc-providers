@@ -13,7 +13,7 @@ import org.yaml.snakeyaml.Yaml;
 
 import com.google.common.base.Preconditions;
 
-import edu.cmu.lti.oaqa.ecd.persistence.AbstractExperimentPersistenceProvider;
+import edu.cmu.lti.oaqa.ecd.impl.AbstractExperimentPersistenceProvider;
 import edu.cmu.lti.oaqa.framework.DataStoreImpl;
 
 public class JdbcExperimentPersistenceProvider extends AbstractExperimentPersistenceProvider {

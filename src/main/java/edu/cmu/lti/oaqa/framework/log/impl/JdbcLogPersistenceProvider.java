@@ -25,8 +25,8 @@ import org.springframework.jdbc.core.PreparedStatementSetter;
 
 import com.google.common.collect.Lists;
 
+import edu.cmu.lti.oaqa.ecd.impl.AbstractLogPersistenceProvider;
 import edu.cmu.lti.oaqa.ecd.log.LogEntry;
-import edu.cmu.lti.oaqa.ecd.persistence.AbstractLogPersistenceProvider;
 import edu.cmu.lti.oaqa.ecd.phase.Trace;
 import edu.cmu.lti.oaqa.framework.DataStoreImpl;
 

@@ -15,7 +15,7 @@ import org.springframework.jdbc.support.lob.LobCreator;
 import org.springframework.jdbc.support.lob.LobHandler;
 import org.xml.sax.SAXException;
 
-import edu.cmu.lti.oaqa.ecd.persistence.AbstractPhasePersistenceProvider;
+import edu.cmu.lti.oaqa.ecd.impl.AbstractPhasePersistenceProvider;
 import edu.cmu.lti.oaqa.ecd.phase.CasDeserializer;
 import edu.cmu.lti.oaqa.ecd.phase.ExecutionStatus;
 import edu.cmu.lti.oaqa.framework.DataStoreImpl;
