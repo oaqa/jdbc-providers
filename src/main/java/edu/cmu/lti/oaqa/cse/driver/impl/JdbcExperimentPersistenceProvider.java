@@ -66,7 +66,7 @@ public class JdbcExperimentPersistenceProvider extends AbstractExperimentPersist
   }
 
   @Override
-  public void updateExperimentMeta(final String experimentId, final int size, Set<Integer> topics) {
+  public void updateExperimentMeta(final String experimentId, final int size, Set<String> topics) {
     Yaml yaml = new Yaml();
     final String topicsSerial = yaml.dump(topics);
     String insert = (String) getParameterValue("update-experiment-topics-query");
