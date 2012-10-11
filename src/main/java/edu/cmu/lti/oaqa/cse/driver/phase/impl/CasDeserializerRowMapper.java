@@ -1,5 +1,6 @@
 package edu.cmu.lti.oaqa.cse.driver.phase.impl;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,7 +28,9 @@ public final class CasDeserializerRowMapper implements CasDeserializer, RowCallb
 
   @Override
   public void processRow(ResultSet rs) throws SQLException {
-    InputStream in = lobHandler.getBlobAsBinaryStream(rs, "xcas");
+    // InputStream in = lobHandler.getBlobAsBinaryStream(rs, "xcas");
+    // Work with sqlite jdbc driver
+    InputStream in = new ByteArrayInputStream(lobHandler.getBlobAsBytes(rs, "xcas"));
     try {
       GZIPInputStream gz = new GZIPInputStream(in);
       nextCas.reset();
