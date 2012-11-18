@@ -57,10 +57,9 @@ public final class DataStoreImpl implements DataStore {
   }
 
   private DataStoreImpl(String url, String username, String password, String driver) throws SQLException {
-    // System.setProperty("sqlite.purejava", "true");
     if (driver != null) {
       try {
-        Class.forName("org.sqlite.JDBC");
+        Class.forName(driver);
       } catch (ClassNotFoundException e) {
         throw new SQLException(e);
       }
