@@ -73,7 +73,7 @@ public final class DataStoreImpl implements DataStore {
       cpds.setPassword(password);
     }
     cpds.setPreferredTestQuery("SELECT 1");
-    // cpds.setTestConnectionOnCheckout(!embedded);
+    cpds.setTestConnectionOnCheckout(true);
     cpds.setInitialPoolSize(1);
     cpds.setMinPoolSize(1);
     cpds.setMaxPoolSize(4); //  Allow larger pool for time out objects
