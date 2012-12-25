@@ -10,7 +10,7 @@ import edu.cmu.lti.oaqa.framework.DataElement;
 public final class DataElementRowMapper implements RowMapper<DataElement> {
   @Override
   public DataElement mapRow(ResultSet rs, int rowNum) throws SQLException {
-    return new DataElement(rs.getString("dataset"), rs.getInt("sequenceId"),
+    return new DataElement(rs.getString("dataset"), rs.getString("sequenceId"),
             rs.getString("question"), null);
   }
 }

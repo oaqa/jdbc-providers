@@ -21,7 +21,7 @@ import edu.cmu.lti.oaqa.framework.persistence.AbstractRetrievalEvalPersistencePr
 public class JdbcRetrievalEvalPersistenceProvider extends AbstractRetrievalEvalPersistenceProvider {
   
   @Override
-  public void insertPartialCounts(final Key key, final int sequenceId, final RetrievalCounts counts) throws SQLException {
+  public void insertPartialCounts(final Key key, final String sequenceId, final RetrievalCounts counts) throws SQLException {
     final String eName = getClass().getSimpleName();
     String insert = (String) getParameterValue("insert-passage-aggregates-query");
     final Trace trace = key.getTrace();
@@ -36,7 +36,7 @@ public class JdbcRetrievalEvalPersistenceProvider extends AbstractRetrievalEvalP
         ps.setFloat(7, counts.getAvep());
         ps.setFloat(8, counts.getCount());
         ps.setInt(9, counts.getBinaryRelevant());
-        ps.setInt(10, sequenceId);
+        ps.setString(10, sequenceId); // TODO: JDBC OAQA
         ps.setInt(11, key.getStage());
         ps.setString(12, trace.getTraceHash());
       }
@@ -44,7 +44,7 @@ public class JdbcRetrievalEvalPersistenceProvider extends AbstractRetrievalEvalP
   }
 
   @Override
-  public void deletePassageAggrEval(final Key key, final int sequenceId) {    
+  public void deletePassageAggrEval(final Key key, final String sequenceId) {    
     final String name = getClass().getSimpleName();
     String insert = (String) getParameterValue("delete-passage-aggr-eval-query");
     DataStoreImpl.getInstance().jdbcTemplate().update(insert, new PreparedStatementSetter() {
@@ -52,7 +52,7 @@ public class JdbcRetrievalEvalPersistenceProvider extends AbstractRetrievalEvalP
         ps.setString(1, key.getExperiment());
         ps.setString(2, key.getTrace().getTraceHash());
         ps.setString(3, name);
-        ps.setInt(4, sequenceId);
+        ps.setString(4, sequenceId); // TODO: JDBC OAQA
       }
     });
   }

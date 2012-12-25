@@ -2,7 +2,15 @@ class: edu.cmu.lti.oaqa.framework.eval.retrieval.impl.JdbcRetrievalEvalPersisten
 select-passage-aggregates-query: |
   SELECT experimentId, traceId, relevant_retrieved, retrieved,
    relevant, avep, count, binary_relevant, stage
-  FROM passage_aggregates WHERE experimentId = ? AND stage = ?
+  FROM passage_aggregates_str WHERE experimentId = ? AND stage = ?
+insert-passage-aggregates-query: |
+  INSERT INTO passage_aggregates_str (experimentId, traceId, 
+   aggregator, relevant_retrieved, retrieved, relevant, 
+   avep, count, binary_relevant, sequenceId, stage, traceHash) 
+  VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
+delete-passage-aggr-eval-query: |
+  DELETE FROM passage_aggregates_str 
+  WHERE experimentId = ? AND traceHash = ? AND aggregator = ? AND sequenceId = ?  
 insert-f-measure-eval-query: |
   INSERT INTO fmeasure_eval
    (experimentId, traceId, evaluator, prec, recall, f1, 
@@ -10,11 +18,3 @@ insert-f-measure-eval-query: |
   VALUES (?,?,?,?,?,?,?,?,?,?,?)
 delete-f-measure-eval-query: |
   DELETE FROM fmeasure_eval WHERE experimentId = ? AND stage = ?
-insert-passage-aggregates-query: |
-  INSERT INTO passage_aggregates (experimentId, traceId, 
-   aggregator, relevant_retrieved, retrieved, relevant, 
-   avep, count, binary_relevant, sequenceId, stage, traceHash) 
-  VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
-delete-passage-aggr-eval-query: |
-  DELETE FROM passage_aggregates 
-  WHERE experimentId = ? AND traceHash = ? AND aggregator = ? AND sequenceId = ?  

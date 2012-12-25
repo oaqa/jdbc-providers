@@ -23,7 +23,7 @@ import edu.cmu.lti.oaqa.framework.DataStoreImpl;
 public class JdbcPhasePersistenceProvider extends AbstractPhasePersistenceProvider {
 
   @Override
-  public void insertExecutionTrace(final String optionId, final int sequenceId,
+  public void insertExecutionTrace(final String optionId, final String sequenceId,
           final String dataset, final Integer phaseNo, final String uuid, final long startTime,
           final String hostname, final String trace, final String key) throws IOException {
     DataStoreImpl.getInstance().jdbcTemplate().update(new PreparedStatementCreator() {
@@ -33,7 +33,7 @@ public class JdbcPhasePersistenceProvider extends AbstractPhasePersistenceProvid
         PreparedStatement ps = con.prepareStatement(insert);
         ps.setString(1, optionId);
         ps.setString(2, "");
-        ps.setInt(3, sequenceId);
+        ps.setString(3, sequenceId); // TODO: JDBC OAQA
         ps.setString(4, dataset);
         ps.setInt(5, phaseNo);
         ps.setString(6, uuid);
