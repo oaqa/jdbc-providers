@@ -1,8 +1,8 @@
 inherit: jdbc.cse.phase-persistence-provider
 insert-query: |
-  INSERT OR IGNORE INTO cas
+  INSERT OR IGNORE INTO cas_str
     (optionId,question,sequenceId,dataset,phase,experiment,
-    startTime,predecesorId,hostname,trace,traceHash)
+    startTime,predecessorId,hostname,trace,traceHash)
   VALUES (?,?,?,?,?,?,?,?,?,?,?)
 insert-meta-query: |
   INSERT OR IGNORE INTO experiment_meta (experiment,phase,stage,size) 
