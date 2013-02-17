@@ -1,0 +1,7 @@
+class: edu.cmu.lti.oaqa.framework.log.impl.JdbcLogPersistenceProvider
+select-log-entries-query: SELECT message FROM experiment_log WHERE experiment = ?
+select-log-entries-trace-clause: AND traceId = ?
+select-log-entries-type-clause: AND type = ?
+insert-log-entry-query: |
+  INSERT OR IGNORE INTO experiment_log (experiment,traceid,type,message)
+  VALUES (?,?,?,?)
