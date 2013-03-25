@@ -1,0 +1,4 @@
+class: edu.cmu.lti.oaqa.cse.driver.impl.JdbcExperimentPersistenceProvider
+insert-experiment-query: |
+  INSERT IGNORE INTO experiment (id, fold, foldId, name, author, configuration, resource, testInstanceIdx)
+  VALUES (?,?,?,?,?,?,?,?)
