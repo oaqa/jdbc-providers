@@ -3,12 +3,12 @@
 	<groupId>edu.cmu.lti.oaqa.framework.impl</groupId>
 	<artifactId>jdbc-providers</artifactId>
 	<version>2.3.2-SNAPSHOT</version>
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>7</version>
-    </parent>
-    <name>JDBC Providers for CSE-Framework</name>
+         <parent>
+	        <groupId>edu.cmu.lti.oaqa</groupId>
+	        <artifactId>oaqa</artifactId>
+		<version>4</version>
+	</parent>
+	<name>JDBC Providers for CSE-Framework</name>
     <url>https://github.com/oaqa/jdbc-providers</url>
     <issueManagement>
         <system>github.com</system>
@@ -24,9 +24,15 @@
     </licenses>
     <scm>
         <url>git@github.com:oaqa/jdbc-providers.git</url>
-        <connection>scm:git:git@github.com:oaqa/jdbc-providers.git</connection>
-        <developerConnection>scm:git:git@github.com:oaqa/jdbc-providers.git</developerConnection>
+        <connection>scm:git:git://github.com/oaqa/jdbc-providers.git</connection>
+        <developerConnection>scm:git:git://github.com/oaqa/jdbc-providers.git</developerConnection>
     </scm>
+     <repositories>
+         <repository>
+	       <id>oaqa</id>
+	             <url>http://mu.lti.cs.cmu.edu:8081/nexus/content/groups/public</url>
+		         </repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>
