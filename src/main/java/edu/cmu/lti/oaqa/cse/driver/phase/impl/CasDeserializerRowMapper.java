@@ -4,14 +4,13 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.zip.GZIPInputStream;
 
-import org.apache.uima.cas.impl.XmiCasDeserializer;
 import org.apache.uima.jcas.JCas;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.lob.LobHandler;
 
+import edu.cmu.lti.oaqa.ecd.phase.BasePhase;
 import edu.cmu.lti.oaqa.ecd.phase.CasDeserializer;
 
 public final class CasDeserializerRowMapper implements CasDeserializer, RowCallbackHandler {
@@ -23,7 +22,7 @@ public final class CasDeserializerRowMapper implements CasDeserializer, RowCallb
 
   public CasDeserializerRowMapper(JCas nextCas) {
     this.nextCas = nextCas;
-    this.lobHandler = new DefaultLobHandler();;
+    this.lobHandler = new DefaultLobHandler();
   }
 
   @Override
@@ -32,9 +31,8 @@ public final class CasDeserializerRowMapper implements CasDeserializer, RowCallb
     // Work with sqlite jdbc driver
     InputStream in = new ByteArrayInputStream(lobHandler.getBlobAsBytes(rs, "xcas"));
     try {
-      GZIPInputStream gz = new GZIPInputStream(in);
       nextCas.reset();
-      XmiCasDeserializer.deserialize(gz, nextCas.getCas(), true);
+      BasePhase.deserializeCAS(nextCas.getCas(), in);
       processedCas = true;
     } catch (Exception e) {
       throw new SQLException(e);
