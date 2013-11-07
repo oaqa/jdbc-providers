@@ -23,16 +23,17 @@ import edu.cmu.lti.oaqa.framework.DataStoreImpl;
 public class JdbcPhasePersistenceProvider extends AbstractPhasePersistenceProvider {
 
   @Override
-  public void insertExecutionTrace(final String optionId, final String sequenceId,
-          final String dataset, final Integer phaseNo, final String uuid, final long startTime,
-          final String hostname, final String trace, final String key) throws IOException {
+  public void insertExecutionTrace(final String optionId, final String question,
+          final String sequenceId, final String dataset, final Integer phaseNo, final String uuid,
+          final long startTime, final String hostname, final String trace, final String key)
+          throws IOException {
     DataStoreImpl.getInstance().jdbcTemplate().update(new PreparedStatementCreator() {
       @Override
       public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
         String insert = (String) getParameterValue("insert-query");
         PreparedStatement ps = con.prepareStatement(insert);
         ps.setString(1, optionId);
-        ps.setString(2, "");
+        ps.setString(2, question);
         ps.setString(3, sequenceId); // TODO: JDBC OAQA
         ps.setString(4, dataset);
         ps.setInt(5, phaseNo);
@@ -53,41 +54,34 @@ public class JdbcPhasePersistenceProvider extends AbstractPhasePersistenceProvid
           final String key) throws IOException {
     String update = (String) getParameterValue("update-query");
     LobHandler lobHandler = new DefaultLobHandler();
-    DataStoreImpl
-            .getInstance()
-            .jdbcTemplate()
-            .execute(update,
-                    new AbstractLobCreatingPreparedStatementCallback(lobHandler) {
-                      protected void setValues(PreparedStatement ps, LobCreator lobCreator)
-                              throws SQLException {
-                        lobCreator.setBlobAsBytes(ps, 1, bytes);
-                        ps.setString(2, status.toString());
-                        ps.setLong(3, endTime);
-                        ps.setString(4, key);
-                      }
-                    });
+    DataStoreImpl.getInstance().jdbcTemplate()
+            .execute(update, new AbstractLobCreatingPreparedStatementCallback(lobHandler) {
+              protected void setValues(PreparedStatement ps, LobCreator lobCreator)
+                      throws SQLException {
+                lobCreator.setBlobAsBytes(ps, 1, bytes);
+                ps.setString(2, status.toString());
+                ps.setLong(3, endTime);
+                ps.setString(4, key);
+              }
+            });
   }
 
   @Override
-  public void storeException(final byte[] bytes, final ExecutionStatus status,
-          final long endTime, final String key) throws IOException, SAXException {
+  public void storeException(final byte[] bytes, final ExecutionStatus status, final long endTime,
+          final String key) throws IOException, SAXException {
     String update = (String) getParameterValue("update-query");
     LobHandler lobHandler = new DefaultLobHandler();
-    DataStoreImpl
-            .getInstance()
-            .jdbcTemplate()
-            .execute(update,
-                    new AbstractLobCreatingPreparedStatementCallback(lobHandler) {
-                      protected void setValues(PreparedStatement ps, LobCreator lobCreator)
-                              throws SQLException {
-                        lobCreator.setBlobAsBytes(ps, 1, bytes);
-                        ps.setString(2, status.toString());
-                        ps.setLong(3, endTime);
-                        ps.setString(4, key);
-                      }
-                    });
+    DataStoreImpl.getInstance().jdbcTemplate()
+            .execute(update, new AbstractLobCreatingPreparedStatementCallback(lobHandler) {
+              protected void setValues(PreparedStatement ps, LobCreator lobCreator)
+                      throws SQLException {
+                lobCreator.setBlobAsBytes(ps, 1, bytes);
+                ps.setString(2, status.toString());
+                ps.setLong(3, endTime);
+                ps.setString(4, key);
+              }
+            });
   }
-
 
   @Override
   public CasDeserializer deserialize(JCas jcas, final String hash) throws SQLException {
@@ -103,8 +97,8 @@ public class JdbcPhasePersistenceProvider extends AbstractPhasePersistenceProvid
   }
 
   @Override
-  public void insertExperimentMeta(final String experimentId, final int phaseNo,
-          final int stageId, final int size) {
+  public void insertExperimentMeta(final String experimentId, final int phaseNo, final int stageId,
+          final int size) {
     String insert = (String) getParameterValue("insert-meta-query");
     JdbcTemplate jdbcTemplate = DataStoreImpl.getInstance().jdbcTemplate();
     jdbcTemplate.update(insert, new PreparedStatementSetter() {
