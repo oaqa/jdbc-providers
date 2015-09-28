@@ -26,8 +26,8 @@
     </licenses>
     <scm>
         <url>git@github.com:oaqa/jdbc-providers.git</url>
-        <connection>scm:git:git://github.com/oaqa/jdbc-providers.git</connection>
-        <developerConnection>scm:git:git://github.com/oaqa/jdbc-providers.git</developerConnection>
+        <connection>scm:git:git@github.com:oaqa/jdbc-providers.git</connection>
+        <developerConnection>scm:git:git@github.com:oaqa/jdbc-providers.git</developerConnection>
     </scm>
     <build>
         <plugins>
